@@ -8,7 +8,7 @@ class Play extends Phaser.Scene{
             frameWidth: 50
         })
         this.load.image("ground", "assets/ground.png")
-        this.load.image("clouds", "assets/clouds.png")
+        this.load.image("background", "assets/background.png")
 
         this.load.audio("music", "assets/music.mp3")
         this.load.audio("death", "assets/death.wav")
@@ -23,23 +23,28 @@ class Play extends Phaser.Scene{
         });
         this.music.play();
 
-        this.clouds = this.add.tileSprite(640, 150, 1280, 330, "clouds")
-        player = new Player(this, gameWidth / 2, gameHeight - 150, "player", 0).setScale(2)
+        this.background = this.add.image(0, gameHeight - 140, "background").setOrigin(0)
+
+        player = new Player(this, gameWidth / 2, gameHeight - 200, "player", 0)
+
+        this.cameras.main.setBounds(0, 0, this.background.width, gameHeight)
+        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(2.5, 4)
+        this.physics.world.setBounds(0, 0, this.background.width, gameHeight)
 
         //ground
-        let ground = this.physics.add.sprite(gameWidth / 2, gameHeight - 40, "ground")
+        let ground = this.physics.add.sprite(0, gameHeight - 30, "ground").setOrigin(0)
         ground.setImmovable(true)
         this.physics.add.collider(player, ground)
 
-        this.difficultyTimer = this.time.addEvent({ //make it harder every 10 seconds
-            delay: 10000,
+        this.difficultyTimer = this.time.addEvent({
+            delay: 20000,
             callback: this.levelUp,
             callbackScope: this,
-            repeat: 10 //not too hard or it will be impossible
+            repeat: 6 //not too hard or it will be impossible
         });
 
-        this.minimum_spawn_time = 60
-        this.variation_spawn_time = 70
+        this.minimum_spawn_time = 100
+        this.variation_spawn_time = 80
         this.spawn_time = Math.random() * this.variation_spawn_time + this.minimum_spawn_time
 
         //obstacles
@@ -54,18 +59,16 @@ class Play extends Phaser.Scene{
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
-        this.cameras.main.setBounds(0, 0, 1280, 300)
-        this.cameras.main.startFollow(player)
     }
 
-    addEnemy(){ //change to spawn enemies
+    addEnemy(){
         let which_object = Math.floor(Math.random() * 2)
         let enemy = new Obstacle(this, this.obstacleMoveSpeed, which_object)
         this.EnemyGroup.add(obstacle)
         this.spawn_time = Math.random() * this.variation_spawn_time + this.minimum_spawn_time
     }
 
-    levelUp(){ //make game more difficult, spawn quicker
+    levelUp(){
         this.minimum_spawn_time -= 10;
         this.variation_spawn_time -= 10;
     }

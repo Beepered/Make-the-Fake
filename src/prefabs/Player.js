@@ -11,8 +11,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.scene.add.existing(this)
         this.setCollideWorldBounds(true)
         this.body.setSize(20, 40)
-        this.movement_speed = 330;
-        this.jump_height = -700
+        this.movement_speed = 200;
+        this.jump_height = -400
         this.gravity = 20
         this.isJumping = false; this.alive = true
 
@@ -23,24 +23,6 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             frames: this.anims.generateFrameNumbers("player", {
                 start: 0,
                 end: 1
-            })
-        })
-        this.anims.create({
-            key: "jump rise",
-            frameRate: 0,
-            repeat: -1,
-            frames: this.anims.generateFrameNumbers("player", {
-                start: 2,
-                end: 2
-            })
-        })
-        this.anims.create({
-            key: "jump fall",
-            frameRate: 0,
-            repeat: -1,
-            frames: this.anims.generateFrameNumbers("player", {
-                start: 3,
-                end: 3
             })
         })
     }
@@ -69,13 +51,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
                 this.body.velocity.y = this.jump_height
             }
             //will not have a jumping animation
-            if(this.body.velocity.y < 0 && this.isJumping){
-                this.play("jump rise")
-            }
-            else if(this.body.velocity.y > 0 && this.isJumping){
-                this.play("jump fall")
-            }
-            else if(this.body.velocity.y == 0 && !this.isJumping){
+            if(this.body.velocity.y == 0 && !this.isJumping){
                 this.play("run", true)
             }
             this.body.velocity.y += this.gravity

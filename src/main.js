@@ -8,6 +8,7 @@ Total Hours: 1
 
 let config = {
     type: Phaser.CANVAS,
+    pixelArt: true,
     physics:{
         default: "arcade",
         arcade:{
@@ -16,6 +17,7 @@ let config = {
     },
     width: 750,
     height: 600,
+    backgroundColor: "#C5DBF9",
     scene: [Menu, Credits, Play, GameOver]
 }
 
