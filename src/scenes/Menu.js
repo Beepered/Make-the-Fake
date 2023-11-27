@@ -45,7 +45,7 @@ class Menu extends Phaser.Scene{
             this.game.sound.stopAll();
             this.scene.start("playScene")
         }
-        if(Phaser.Input.Keyboard.JustDown(keyDOWN)){
+        else if(Phaser.Input.Keyboard.JustDown(keyDOWN)){
             this.scene.start("creditScene")
         }
     }

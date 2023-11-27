@@ -1,7 +1,7 @@
 /*
 Name: Brendan Trieu
 Game Title: 
-Total Hours: 1
+Total Hours: 6
 
 
 */
@@ -25,5 +25,5 @@ let game = new Phaser.Game(config);
 let gameHeight = game.config.height
 let gameWidth = game.config.width
 
-let keyUP, keyDOWN, keyLEFT, keyRIGHT;
+let keyUP, keyDOWN, keyLEFT, keyRIGHT, SPACEBAR;
 let player

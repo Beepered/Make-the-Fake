@@ -7,6 +7,7 @@ class Play extends Phaser.Scene{
         this.load.spritesheet("player", "assets/spritesheet.png", {
             frameWidth: 50
         })
+        this.load.image("bride", "assets/bride.png")
         this.load.image("ground", "assets/ground.png")
         this.load.image("background", "assets/background.png")
 
@@ -23,24 +24,26 @@ class Play extends Phaser.Scene{
         });
         this.music.play();
 
-        this.background = this.add.image(0, gameHeight - 140, "background").setOrigin(0)
+        this.background = this.add.image(0, 30, "background").setOrigin(0)
 
-        player = new Player(this, gameWidth / 2, gameHeight - 200, "player", 0)
+        this.cameras.main.setBounds(0, 0, this.background.width, 150)
+        this.physics.world.setBounds(0, 0, this.background.width, 150)
 
-        this.cameras.main.setBounds(0, 0, this.background.width, gameHeight)
-        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(2.5, 4)
-        this.physics.world.setBounds(0, 0, this.background.width, gameHeight)
+        player = new Player(this, this.background.width / 2, 110, "player", 0)
+        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(2.5, 5)
+
+        this.bride = new Bride(this, player.x - 100, player.y, "bride")
 
         //ground
-        let ground = this.physics.add.sprite(0, gameHeight - 30, "ground").setOrigin(0)
+        let ground = this.physics.add.sprite(0, 140, "ground").setOrigin(0)
         ground.setImmovable(true)
         this.physics.add.collider(player, ground)
 
         this.difficultyTimer = this.time.addEvent({
-            delay: 20000,
+            delay: 15000,
             callback: this.levelUp,
             callbackScope: this,
-            repeat: 6 //not too hard or it will be impossible
+            repeat: 10 //not too hard or it will be impossible
         });
 
         this.minimum_spawn_time = 100
@@ -58,7 +61,7 @@ class Play extends Phaser.Scene{
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
+        SPACEBAR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
     addEnemy(){
@@ -69,8 +72,9 @@ class Play extends Phaser.Scene{
     }
 
     levelUp(){
-        this.minimum_spawn_time -= 10;
-        this.variation_spawn_time -= 10;
+        this.minimum_spawn_time -= 5;
+        this.variation_spawn_time -= 5;
+        console.log("level up: " + this.minimum_spawn_time + " min, " + this.variation_spawn_time + " variation")
     }
 
     update(){

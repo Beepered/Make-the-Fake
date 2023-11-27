@@ -10,11 +10,13 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         scene.physics.add.existing(this);
         this.scene.add.existing(this)
         this.setCollideWorldBounds(true)
-        this.body.setSize(20, 40)
-        this.movement_speed = 200;
-        this.jump_height = -400
-        this.gravity = 20
+        this.body.setSize(20, 50)
+        this.movement_speed = 130;
+        this.jump_height = -460
+        this.gravity = 18
         this.isJumping = false; this.alive = true
+        this.bullet = new Bullet(scene, 0, 0, "bullet")
+        this.shootTime = 0
 
         this.anims.create({
             key: "run",
@@ -33,7 +35,6 @@ class Player extends Phaser.Physics.Arcade.Sprite{
                 this.isJumping = false
             }
 
-            let playerVector = new Phaser.Math.Vector2(this.body.velocity.x, this.body.velocity.y)
             if(keyLEFT.isDown){
                 this.body.velocity.x = -this.movement_speed
                 this.flipX = true;
@@ -50,10 +51,16 @@ class Player extends Phaser.Physics.Arcade.Sprite{
                 this.isJumping = true;
                 this.body.velocity.y = this.jump_height
             }
-            //will not have a jumping animation
             if(this.body.velocity.y == 0 && !this.isJumping){
                 this.play("run", true)
             }
+            if(Phaser.Input.Keyboard.JustDown(SPACEBAR) && this.shootTime < 0){
+                //this.play("shoot", true)
+                this.bullet.shoot(this.x, this.y, this.flipX);
+                this.shootTime = 60
+            }
+            this.shootTime--
+
             this.body.velocity.y += this.gravity
         }
     }
