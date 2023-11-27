@@ -7,14 +7,13 @@ class Play extends Phaser.Scene{
         this.load.spritesheet("player", "assets/spritesheet.png", {
             frameWidth: 50
         })
+        this.load.image("bullet", "assets/bullet.png")
         this.load.image("bride", "assets/bride.png")
         this.load.image("ground", "assets/ground.png")
         this.load.image("background", "assets/background.png")
 
         this.load.audio("music", "assets/music.mp3")
         this.load.audio("death", "assets/death.wav")
-        this.load.audio("jump", "assets/jump.wav")
-        this.load.audio("level up", "assets/level up.wav")
     }
 
     create(){
@@ -29,10 +28,10 @@ class Play extends Phaser.Scene{
         this.cameras.main.setBounds(0, 0, this.background.width, 150)
         this.physics.world.setBounds(0, 0, this.background.width, 150)
 
-        player = new Player(this, this.background.width / 2, 110, "player", 0)
+        player = new Player(this, this.background.width / 2, 115, "player", 0)
         this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(2.5, 5)
 
-        this.bride = new Bride(this, player.x - 100, player.y, "bride")
+        bride = new Bride(this, player.x - 50, player.y, "bride")
 
         //ground
         let ground = this.physics.add.sprite(0, 140, "ground").setOrigin(0)
@@ -43,7 +42,7 @@ class Play extends Phaser.Scene{
             delay: 15000,
             callback: this.levelUp,
             callbackScope: this,
-            repeat: 10 //not too hard or it will be impossible
+            repeat: 12
         });
 
         this.minimum_spawn_time = 100
@@ -57,6 +56,15 @@ class Play extends Phaser.Scene{
         this.physics.add.collider(this, this.EnemyGroup, ()=>{
             this.collisionDetection()
         })
+
+        this.physics.add.collider(bullet, bride, ()=>{
+            bride.killed()
+            player.killed()
+            this.time.delayedCall(1500, () => {
+                this.music.stop();
+                this.scene.start("gameOverScene");
+            });
+        });
 
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -79,6 +87,8 @@ class Play extends Phaser.Scene{
 
     update(){
         player.update();
+        bride.update();
+        bullet.update();
         /*
         this.spawn_time--
         if(this.spawn_time <= 0){
@@ -87,9 +97,7 @@ class Play extends Phaser.Scene{
         */
     }
     collisionDetection(){
-        this.alive = false
-        this.destroy()
-        this.sound.play("death")
+        player.killed()
 
         this.time.delayedCall(1500, () => {
             this.music.stop();

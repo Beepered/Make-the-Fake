@@ -3,6 +3,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.load.spritesheet("player", "assets/spritesheet.png", {
             frameWidth: 50
         })
+        this.game.load.audio("jump", "assets/jump.wav")
+        //this.load.audio("jump", "assets/jump.wav")
     }
     
     constructor(scene, x, y, texture, frame){
@@ -15,7 +17,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.jump_height = -460
         this.gravity = 18
         this.isJumping = false; this.alive = true
-        this.bullet = new Bullet(scene, 0, 0, "bullet")
+        bullet = new Bullet(scene, 0, 0, "bullet")
         this.shootTime = 0
 
         this.anims.create({
@@ -47,7 +49,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
                 this.body.velocity.x = 0
             }
             if(Phaser.Input.Keyboard.JustDown(keyUP) && !this.isJumping){
-                //this.sound.play("jump")
+                //this.game.sound.play("jump")
                 this.isJumping = true;
                 this.body.velocity.y = this.jump_height
             }
@@ -56,12 +58,23 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             }
             if(Phaser.Input.Keyboard.JustDown(SPACEBAR) && this.shootTime < 0){
                 //this.play("shoot", true)
-                this.bullet.shoot(this.x, this.y, this.flipX);
+                //this.sound.play("shoot")
+                bullet.shoot(this.x, this.y, this.flipX);
                 this.shootTime = 60
             }
             this.shootTime--
 
             this.body.velocity.y += this.gravity
         }
+    }
+
+    killed(){
+        //groom says OH NO
+        this.alive = false
+        this.body.velocity.x = 0
+        this.anims.stop();
+
+        //this.play("death")
+        //this.sound.play("death")
     }
 }

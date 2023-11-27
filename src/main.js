@@ -1,7 +1,7 @@
 /*
 Name: Brendan Trieu
 Game Title: 
-Total Hours: 6
+Total Hours: 7
 
 
 */
@@ -26,4 +26,4 @@ let gameHeight = game.config.height
 let gameWidth = game.config.width
 
 let keyUP, keyDOWN, keyLEFT, keyRIGHT, SPACEBAR;
-let player
+let player, bullet, bride

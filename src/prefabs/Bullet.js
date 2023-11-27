@@ -22,9 +22,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
 	}
 
     update() {
-        console.log(this.x)
 		if (this.x <= 0) {
-            console.log("dead")
+            this.body.velocity.x = 0
 			this.setActive(false);
 			this.setVisible(false);
 		}
