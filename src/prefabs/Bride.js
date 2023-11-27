@@ -3,9 +3,10 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
         //this.load.audio("death", "assets/bride_death.wav")
     }
 
-    constructor(scene, x, y, texture){
-        super(scene, x, y, texture)
+    constructor(scene, x, y, texture, frame){
+        super(scene, x, y, texture, frame)
         scene.physics.add.existing(this)
+        this.scene.add.existing(this)
         this.setCollideWorldBounds(true)
         this.alive = true
     }
@@ -27,7 +28,6 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
     killed(){
         this.alive = false
         this.body.velocity.x = 0
-        console.log("OUCH")
         //this.play("death")
         //this.sound.play("death")
     }

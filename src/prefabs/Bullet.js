@@ -2,7 +2,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y, texture){
         super(scene, x, y, texture)
         scene.physics.add.existing(this);
-        this.body.setSize(10, 10)
+        this.scene.add.existing(this)
         this.speed = 250
     }
 
