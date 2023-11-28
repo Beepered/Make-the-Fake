@@ -1,7 +1,7 @@
 /*
 Name: Brendan Trieu
-Game Title: 
-Total Hours: 7
+Game Title: Groom Raider
+Total Hours: 8
 
 
 */
@@ -18,7 +18,7 @@ let config = {
     width: 750,
     height: 600,
     backgroundColor: "#C5DBF9",
-    scene: [Menu, Credits, Play, GameOver]
+    scene: [Menu, Credits, Play, UIScene, GameOver]
 }
 
 let game = new Phaser.Game(config);
@@ -27,3 +27,4 @@ let gameWidth = game.config.width
 
 let keyUP, keyDOWN, keyLEFT, keyRIGHT, SPACEBAR;
 let player, bullet, bride
+let points = 0; highscore = 0; lives = 3;

@@ -6,18 +6,19 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y, texture, frame){
         super(scene, x, y, texture, frame)
         scene.physics.add.existing(this)
-        this.scene.add.existing(this)
+        scene.add.existing(this)
         this.setCollideWorldBounds(true)
         this.alive = true
+        this.speed = 35
     }
 
     update(){
         if(this.alive){
             if(this.x < player.x - 50){
-                this.body.velocity.x = 30
+                this.body.velocity.x = this.speed
             }
             else if(this.x > player.x + 50){
-                this.body.velocity.x = -30
+                this.body.velocity.x = -this.speed
             }
             else{
                 this.body.velocity.x = 0
