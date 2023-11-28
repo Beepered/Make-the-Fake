@@ -31,5 +31,8 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
         this.body.velocity.x = 0
         //this.play("death")
         //this.sound.play("death")
+        this.scene.time.delayedCall(1500, () => {
+            this.alive = true
+        });
     }
 }

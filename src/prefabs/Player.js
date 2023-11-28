@@ -64,7 +64,6 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             if(Phaser.Input.Keyboard.JustDown(SPACEBAR) && this.shootTime < 0){
                 //this.play("shoot", true)
                 //this.sound.play("shoot")
-                this.killed()
                 bullet.shoot(this.x, this.y, this.flipX);
                 this.shootTime = 60
             }
@@ -75,16 +74,18 @@ class Player extends Phaser.Physics.Arcade.Sprite{
     }
 
     killed(){
-        //groom says OH NO
         lives--
-        //this.alive = false
+        this.alive = false
+        //death sound
+        //death animation
         this.body.velocity.x = 0
         this.anims.stop();
-        if(lives == 0){
-            scene.start("gameOverScene");
-        }
-
-        //this.play("death")
-        //this.sound.play("death")
+        this.scene.time.delayedCall(1500, () => {
+            if(lives == 0){
+                this.music.stop();
+                this.scene.start("gameOverScene");
+            }
+            this.alive = true
+        });
     }
 }

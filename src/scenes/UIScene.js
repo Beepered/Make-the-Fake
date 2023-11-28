@@ -1,30 +1,13 @@
 class UIScene extends Phaser.Scene
 {
-    constructor ()
-    {
+    constructor (){
         super("UIScene");
     }
 
-    create ()
-    {
+    create (){
         this.point_text = this.add.text(50, 30, '0', { font: '30px Arial', fill: '#000000' });
         this.highscore_text = this.add.text(350, 30, '0', { font: '30px Arial', fill: '#000000' });
         this.lives_text = this.add.text(700, 30, '0', { font: '30px Arial', fill: '#000000' });
-
-        //  Grab a reference to the Game Scene
-        const playScene = this.scene.get('Play');
-
-        /*
-        //  Listen for events from it
-        playScene.events.on('addScore', function ()
-        {
-
-            this.points += 10;
-
-            info.setText(`Score: ${this.points}`);
-
-        }, this);
-        */
     }
     
     update(){

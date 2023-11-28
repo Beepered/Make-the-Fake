@@ -57,22 +57,15 @@ class Play extends Phaser.Scene{
             runChildUpdate: true
         })
         this.physics.add.collider(player, this.EnemyGroup, ()=>{
-            player.killed()
-            /*
-            this.time.delayedCall(1500, () => {
-                this.music.stop();
-                this.scene.start("gameOverScene");
-            });
-            */
+            if(player.alive){
+                player.killed()
+            }
         })
 
         this.physics.add.collider(bullet, bride, ()=>{
+            bullet.reset()
             bride.killed()
             player.killed()
-            this.time.delayedCall(1500, () => {
-                this.music.stop();
-                this.scene.start("gameOverScene");
-            });
         });
         
 

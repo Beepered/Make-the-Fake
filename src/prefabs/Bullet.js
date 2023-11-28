@@ -6,7 +6,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
         this.setCollideWorldBounds(true);
         this.speed = 300
         this.checkWorldBounds = true;
-        this.events.onOutOfBounds.add(reset, this);
+        //events.onOutOfBounds.add(reset, this);
         /*
         this.physics.add.overlap(bullet, enemy, function () {
             inZone = true;
