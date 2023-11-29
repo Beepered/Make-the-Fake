@@ -16,9 +16,10 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.movement_speed = 120;
         this.jump_height = -450
         this.gravity = 18
-        this.isJumping = false; this.alive = true
+        this.isJumping = false; this.alive = true;
         bullet = new Bullet(scene, -10, -10, "bullet")
         this.shootTime = 0
+        this.invincibleTime = 0
 
         this.anims.create({
             key: "run",
@@ -68,21 +69,29 @@ class Player extends Phaser.Physics.Arcade.Sprite{
                 this.shootTime = 60
             }
             this.shootTime--
-
-            this.body.velocity.y += this.gravity
         }
+        this.body.velocity.y += this.gravity
+        this.invincibleTime--
+            if(this.invincibleTime > 0){
+                console.log("invincible")
+            }
+            else{
+                console.log("vulnerable")
+            }
     }
 
     killed(){
         lives--
         this.alive = false
+        this.invincibleTime = 200
         //death sound
         //death animation
         this.body.velocity.x = 0
+        this.body.velocity.y = -150
         this.anims.stop();
         this.scene.time.delayedCall(1500, () => {
             if(lives == 0){
-                this.music.stop();
+                this.scene.music.stop();
                 this.scene.start("gameOverScene");
             }
             this.alive = true

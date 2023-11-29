@@ -9,8 +9,12 @@ class Play extends Phaser.Scene{
         })
         this.load.image("bullet", "assets/bullet.png")
         this.load.image("bride", "assets/bride.png")
+
         this.load.image("ground", "assets/ground.png")
         this.load.image("background", "assets/background.png")
+
+        this.load.image("police", "assets/police.png")
+        this.load.image("heli-police", "assets/heli-police.png")
 
         this.load.audio("jump", "assets/jump.wav")
         this.load.audio("music", "assets/music.mp3")
@@ -57,9 +61,13 @@ class Play extends Phaser.Scene{
             runChildUpdate: true
         })
         this.physics.add.collider(player, this.EnemyGroup, ()=>{
-            if(player.alive){
+            if(player.invincibleTime <= 0){
                 player.killed()
             }
+        })
+        this.physics.add.collider(bullet, this.EnemyGroup, ()=>{
+            //deal damage
+            
         })
 
         this.physics.add.collider(bullet, bride, ()=>{
@@ -76,9 +84,8 @@ class Play extends Phaser.Scene{
     }
 
     addEnemy(){
-        let which_object = Math.floor(Math.random() * 2)
-        let enemy = new Obstacle(this, this.obstacleMoveSpeed, which_object)
-        this.EnemyGroup.add(obstacle)
+        let enemy = new Enemy(this, this.enemy_health, this.enemy_speed)
+        this.EnemyGroup.add(enemy)
         this.spawn_time = Math.random() * this.variation_spawn_time + this.minimum_spawn_time
     }
 
@@ -94,11 +101,11 @@ class Play extends Phaser.Scene{
         player.update();
         bride.update();
         bullet.update();
-        /*
+        
         this.spawn_time--
         if(this.spawn_time <= 0){
             this.addEnemy()
         }
-        */
+        
     }
 }
