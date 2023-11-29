@@ -1,9 +1,9 @@
 /*
 Name: Brendan Trieu
 Game Title: Groom Raider
-Total Hours: 8
+Total Hours: 10
 
-
+major components: Physics, Camera, Text, Animation, Timers, Sound
 */
 
 let config = {

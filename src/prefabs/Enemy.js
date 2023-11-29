@@ -14,35 +14,44 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
             super(scene, -100, 110, sprite_name)
         }
         else{
-            super(scene, 100, 110, sprite_name)
+            super(scene, 1500, 110, sprite_name)
         }
         
         scene.physics.add.existing(this)
         this.scene.add.existing(this)
         this.setCollideWorldBounds(true)
+        this.setPushable(false)
         this.speed = speed
         this.health = health
         this.hitTime = 0
+
+        this.hitSound = scene.sound.add("hit") 
     }
 
     update(){
         if(this.hitTime <= 0){
-            if(this.x < player.x){
+            if(this.x < player.x - 5){
                 this.body.velocity.x = this.speed
             }
-            else if(this.x > player.x){
+            else if(this.x > player.x + 5){
                 this.body.velocity.x = -this.speed
             }
-        }
-        if(this.health <= 0){
-            object.destroy();
+            else{
+                this.body.velocity.x = 0
+            }
         }
         this.hitTime--
     }
 
     damage(bulletVelocity){
-        this.health--
-        this.hitTime = 20
+        this.hitSound.play()
+        this.hitTime = 50
         this.body.velocity.x = bulletVelocity / 5 //pushback dependent on bullet speed
+        
+        this.health--
+        if(this.health <= 0){
+            points += 100 + (Math.random() * 500)
+            this.destroy();
+        }
     }
 }

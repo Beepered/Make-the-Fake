@@ -8,6 +8,7 @@ class Play extends Phaser.Scene{
             frameWidth: 50
         })
         this.load.image("bullet", "assets/bullet.png")
+
         this.load.image("bride", "assets/bride.png")
 
         this.load.image("ground", "assets/ground.png")
@@ -16,9 +17,10 @@ class Play extends Phaser.Scene{
         this.load.image("police", "assets/police.png")
         this.load.image("heli-police", "assets/heli-police.png")
 
-        this.load.audio("jump", "assets/jump.wav")
         this.load.audio("music", "assets/music.mp3")
-        this.load.audio("death", "assets/death.wav")
+        this.load.audio("jump", "assets/jump.wav")
+        this.load.audio("shoot", "assets/shoot.wav")
+        this.load.audio("hit", "assets/hit.wav")
     }
 
     create(){
@@ -51,31 +53,31 @@ class Play extends Phaser.Scene{
             repeat: 12
         });
 
-        this.minimum_spawn_time = 100
+        this.minimum_spawn_time = 150
         this.variation_spawn_time = 80
-        this.spawn_time = Math.random() * this.variation_spawn_time + this.minimum_spawn_time
-        this.enemy_health = 0.1; this.enemy_speed = 50
+        this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
+        this.enemy_health = 0.1; this.enemy_speed = 60
 
-        //obstacles
         this.EnemyGroup = this.add.group({
             runChildUpdate: true
         })
-        this.physics.add.collider(player, this.EnemyGroup, ()=>{
+        this.physics.add.overlap(player, this.EnemyGroup, ()=>{
             if(player.invincibleTime <= 0){
                 player.killed()
             }
         })
-        this.physics.add.collider(bullet, this.EnemyGroup, ()=>{
-            //deal damage
-            
+
+        this.physics.add.overlap(bullet, this.EnemyGroup, () => {
+            console.log("hit enemy")
+            bullet.reset()
         })
+        
 
         this.physics.add.collider(bullet, bride, ()=>{
             bullet.reset()
             bride.killed()
             player.killed()
         });
-        
 
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -86,13 +88,13 @@ class Play extends Phaser.Scene{
     addEnemy(){
         let enemy = new Enemy(this, this.enemy_health, this.enemy_speed)
         this.EnemyGroup.add(enemy)
-        this.spawn_time = Math.random() * this.variation_spawn_time + this.minimum_spawn_time
+        this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
     }
 
     levelUp(){
-        this.minimum_spawn_time -= 5;
+        this.minimum_spawn_time -= 7;
         this.variation_spawn_time -= 5;
-        this.enemy_speed += 5
+        this.enemy_speed += 8
         this.enemy_health += 0.3
         console.log("level up: " + this.minimum_spawn_time + " min, " + this.variation_spawn_time + " variation")
     }
@@ -106,6 +108,5 @@ class Play extends Phaser.Scene{
         if(this.spawn_time <= 0){
             this.addEnemy()
         }
-        
     }
 }

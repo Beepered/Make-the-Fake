@@ -4,7 +4,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
         scene.physics.add.existing(this);
         scene.add.existing(this)
         this.setCollideWorldBounds(true);
-        this.speed = 300
+        this.speed = 350
         this.checkWorldBounds = true;
         //events.onOutOfBounds.add(reset, this);
         /*
@@ -43,7 +43,6 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
         this.x = -10; this.y = -10
         this.setActive(false)
         this.setVisible(false)
-        console.log("reset")
     }
 
 }

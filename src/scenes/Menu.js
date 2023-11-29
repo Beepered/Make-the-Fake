@@ -8,6 +8,7 @@ class Menu extends Phaser.Scene{
     }
 
     create(){
+        points = 0; lives = 3
         this.music = this.sound.add("wind", {
             volume: 0.35,
             loop: true
