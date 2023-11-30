@@ -5,7 +5,8 @@ class Play extends Phaser.Scene{
 
     preload(){
         this.load.spritesheet("player", "assets/spritesheet.png", {
-            frameWidth: 50
+            frameWidth: 55,
+            frameHeight: 50
         })
         this.load.image("bullet", "assets/bullet.png")
 
@@ -67,9 +68,9 @@ class Play extends Phaser.Scene{
             }
         })
 
-        this.physics.add.overlap(bullet, this.EnemyGroup, () => {
-            console.log("hit enemy")
+        this.physics.add.overlap(bullet, this.EnemyGroup, (bullet, enemy) => {
             bullet.reset()
+            enemy.damage(bullet.body.velocity.x)
         })
         
 

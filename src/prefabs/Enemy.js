@@ -50,7 +50,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         
         this.health--
         if(this.health <= 0){
-            points += 100 + (Math.random() * 500)
+            points += Math.floor(100 + (Math.random() * 500))
             this.destroy();
         }
     }

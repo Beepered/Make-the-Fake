@@ -1,10 +1,4 @@
 class Player extends Phaser.Physics.Arcade.Sprite{
-    preload(){
-        this.load.spritesheet("player", "assets/spritesheet.png", {
-            frameWidth: 50
-        })
-    }
-    
     constructor(scene, x, y, texture, frame){
         super(scene, x, y, texture, frame);
         scene.add.existing(this)
@@ -18,22 +12,35 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.gravity = 18
         this.isJumping = false; this.alive = true;
         bullet = new Bullet(scene, -10, -10, "bullet")
-        this.shootTime = 0; this.maxShootTime = 50;
+        this.shootTime = 0; this.maxShootTime = 50; this.shootAnimTime = 0
         this.invincibleTime = 0
+        this.direction = 1
 
         this.jumpSound = scene.sound.add("jump") 
         this.shootSound = scene.sound.add("shoot") 
-
         this.anims.create({
-            key: "run",
-            frameRate: 3,
+            key: "idle",
+            frames: this.anims.generateFrameNumbers("player", {
+                start: 2,
+                end: 2
+            })
+        })
+        this.anims.create({
+            key: "move",
+            frameRate: 4,
             repeat: -1,
             frames: this.anims.generateFrameNumbers("player", {
                 start: 0,
                 end: 1
             })
         })
-
+        this.anims.create({
+            key: "shoot",
+            frames: this.anims.generateFrameNumbers("player", {
+                start: 3,
+                end: 3
+            })
+        })
     }
     update(){
         if(this.alive){
@@ -44,28 +51,34 @@ class Player extends Phaser.Physics.Arcade.Sprite{
                 this.isJumping = true
             }
 
-            if(keyLEFT.isDown){
-                this.body.velocity.x = -this.movement_speed
-                this.flipX = true;
+            if(this.shootAnimTime <= 0){
+                if(keyLEFT.isDown){
+                    this.direction = -1
+                    this.body.velocity.x = -this.movement_speed
+                    this.flipX = true;
+                    this.play("move", true)
+                }
+                else if(keyRIGHT.isDown){
+                    this.direction = 1
+                    this.body.velocity.x = this.movement_speed
+                    this.flipX = false;
+                    this.play("move", true)
+                }
+                else{
+                    this.body.velocity.x = 0
+                    this.play("idle")
+                }
             }
-            else if(keyRIGHT.isDown){
-                this.body.velocity.x = this.movement_speed
-                this.flipX = false;
-            }
-            else{
-                this.body.velocity.x = 0
-            }
+           
             if(Phaser.Input.Keyboard.JustDown(keyUP) && !this.isJumping){
                 this.jumpSound.play()
                 this.body.velocity.y = this.jump_height
             }
-            if(this.body.velocity.y == 0 && !this.isJumping){
-                this.play("run", true)
-            }
             if(Phaser.Input.Keyboard.JustDown(SPACEBAR) && this.shootTime < 0){
-                //this.play("shoot", true)
+                this.play("shoot")
                 this.shootSound.play()
-                bullet.shoot(this.x, this.y, this.flipX);
+                this.shootAnimTime = 15
+                bullet.shoot(this.x + (30 * this.direction), this.y - 10, this.direction);
                 this.shootTime = this.maxShootTime
             }
             if(this.invincibleTime <= 0){
@@ -74,7 +87,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         }
         this.body.velocity.y += this.gravity
         this.invincibleTime--
-        this.shootTime--
+        this.shootTime--; this.shootAnimTime--
     }
 
     killed(){

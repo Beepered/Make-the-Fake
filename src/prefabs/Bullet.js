@@ -6,12 +6,6 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
         this.setCollideWorldBounds(true);
         this.speed = 350
         this.checkWorldBounds = true;
-        //events.onOutOfBounds.add(reset, this);
-        /*
-        this.physics.add.overlap(bullet, enemy, function () {
-            inZone = true;
-        });
-        */
     }
 
     shoot(x, y, direction) {
@@ -20,13 +14,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
 
 		this.setActive(true);
 		this.setVisible(true);
-
-        if(direction){ //if flipX
-            this.body.velocity.x = -this.speed
-        }
-        else{
-            this.body.velocity.x = this.speed
-        }
+        this.body.velocity.x = this.speed * direction
 	}
 
     update() {
