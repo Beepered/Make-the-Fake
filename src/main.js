@@ -1,9 +1,15 @@
 /*
 Name: Brendan Trieu
 Game Title: Groom Raider
-Total Hours: 10
+Total Hours: 14
 
-major components: Physics, Camera, Text, Animation, Timers, Sound
+major components:
+Physics (all game objects have physics)
+Camera (camera follows player)
+Text (UI text)
+Animation (all gameobjects have animation)
+Timers (difficulty increase)
+Sound (jump, shoot, hit, groom_hurt, bride_hurt)
 */
 
 let config = {

@@ -1,9 +1,8 @@
 class Enemy extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, health, speed){
-        let rand_int = Phaser.Math.Between(0, 2)
         let y_pos
         let sprite_name
-        if(rand_int == 0){
+        if(Phaser.Math.Between(0, 2) == 0){
             sprite_name = "police"
             y_pos = 135
         }
@@ -12,12 +11,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
             y_pos = 50
         }
 
-        let rand_side = Phaser.Math.Between(0, 2)
-        if(rand_side == 0){
-            super(scene, -100, y_pos, sprite_name)
+        if(Phaser.Math.Between(0, 2) == 0){ //left side
+            super(scene, -70, y_pos, sprite_name)
         }
         else{
-            super(scene, 1500, y_pos, sprite_name)
+            super(scene, worldWidth + 70, y_pos, sprite_name)
         }
         this.sprite_name = sprite_name
         scene.physics.add.existing(this)
@@ -29,7 +27,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         this.hitTime = 0 //knockback
 
         this.hitSound = scene.sound.add("hit")
-        if(rand_int == 0){
+        if(sprite_name == "police"){
             this.anims.create({
                 key: "move",
                 frameRate: 4,
@@ -73,8 +71,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
             let basicTween = this.scene.tweens.add({
                 targets: text,
                 alpha: { from: 1, to: 0 },
-                scale: { from: 0.4, to: 1},
-                y: text.y - 25,
+                scale: { from: 0.7, to: 1},
+                y: text.y - 10,
                 ease: 'Sine.easeInOut',
             })
             this.destroy();

@@ -28,6 +28,15 @@ class Play extends Phaser.Scene{
             frameHeight: 50
         })
 
+        this.load.spritesheet("person_woman", "assets/person_woman.png", {
+            frameWidth: 37,
+            frameHeight: 50
+        })
+        this.load.spritesheet("person_man", "assets/person_man.png", {
+            frameWidth: 34,
+            frameHeight: 50
+        })
+
         this.load.audio("music", "assets/music.mp3")
         this.load.audio("jump", "assets/jump.wav")
         this.load.audio("shoot", "assets/shoot.wav")
@@ -75,7 +84,7 @@ class Play extends Phaser.Scene{
         });
 
         //  enemy stuff
-        this.minimum_spawn_time = 10
+        this.minimum_spawn_time = 200
         this.variation_spawn_time = 80
         this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
         this.enemy_health = 0.1; this.enemy_speed = 55
@@ -93,6 +102,10 @@ class Play extends Phaser.Scene{
             bullet.reset()
             enemy.damage(bullet)
         })
+
+        this.minimum_person_spawn_time = 450
+        this.variation_person_spawn_time = 200
+        this.person_spawn_time = this.minimum_person_spawn_time + (Math.random() * this.variation_person_spawn_time)
 
         this.PersonGroup = this.add.group({
             runChildUpdate: true
@@ -114,6 +127,13 @@ class Play extends Phaser.Scene{
         this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
     }
 
+    addPerson(){
+        console.log("adding person")
+        let person = new Person(this)
+        this.PersonGroup.add(person)
+        this.person_spawn_time = this.minimum_person_spawn_time + (Math.random() * this.variation_person_spawn_time)
+    }
+
     levelUp(){
         this.minimum_spawn_time -= 9;
         this.variation_spawn_time -= 5;
@@ -130,6 +150,10 @@ class Play extends Phaser.Scene{
         this.spawn_time--
         if(this.spawn_time <= 0){
             this.addEnemy()
+        }
+        this.person_spawn_time--
+        if(this.person_spawn_time <= 0){
+            this.addPerson()
         }
     }
 }

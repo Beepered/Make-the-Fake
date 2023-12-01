@@ -103,7 +103,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.hurtSound.play()
         lives--
         this.alive = false
-        this.invincibleTime = 200
+        this.invincibleTime = 180
         this.body.velocity.x = 0
         this.body.velocity.y = -170
         this.anims.stop();
