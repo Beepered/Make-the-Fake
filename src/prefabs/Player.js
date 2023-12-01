@@ -3,9 +3,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, texture, frame);
         scene.add.existing(this)
         scene.physics.add.existing(this);
-
         this.body.setSize(20, 50)
-        this.body.setCollideWorldBounds(true)
+        this.setCollideWorldBounds(true)
         
         this.movement_speed = 120;
         this.jump_height = -450
@@ -55,13 +54,23 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             if(this.shootAnimTime <= 0){
                 if(keyLEFT.isDown){
                     this.direction = -1
-                    this.body.velocity.x = -this.movement_speed
+                    if(this.x > 55){
+                        this.body.velocity.x = -this.movement_speed
+                    }
+                    else{
+                        this.body.velocity.x = 0
+                    }
                     this.flipX = true;
                     this.play("move", true)
                 }
                 else if(keyRIGHT.isDown){
                     this.direction = 1
-                    this.body.velocity.x = this.movement_speed
+                    if(this.x < 1145){
+                        this.body.velocity.x = this.movement_speed
+                    }
+                    else{
+                        this.body.velocity.x = 0
+                    }
                     this.flipX = false;
                     this.play("move", true)
                 }
@@ -79,7 +88,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
                 this.play("shoot")
                 this.shootSound.play()
                 this.shootAnimTime = 15
-                bullet.shoot(this.x + (30 * this.direction), this.y - 10, this.direction);
+                bullet.shoot(this.x + (15 * this.direction), this.y - 10, this.direction);
                 this.shootTime = this.maxShootTime
             }
             if(this.invincibleTime <= 0){
@@ -99,9 +108,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.body.velocity.x = 0
         this.body.velocity.y = -170
         this.anims.stop();
-        this.setTint(0xFF0000)
         this.scene.time.delayedCall(1300, () => {
-            
             this.alive = true
             if(lives == 0){
                 if(points > highscore){

@@ -6,6 +6,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
         this.setCollideWorldBounds(true);
         this.speed = 350
         this.checkWorldBounds = true;
+        this.lifeTime = 0
     }
 
     shoot(x, y, direction) {
@@ -18,13 +19,6 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
 	}
 
     update() {
-        /*
-		if (this.x <= 0 || this.x >= game.config.width) {
-            this.body.velocity.x = 0
-			this.setActive(false);
-			this.setVisible(false);
-		}
-        */
 	}
 
     reset(){

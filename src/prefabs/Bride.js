@@ -1,11 +1,12 @@
 class Bride extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y, texture, frame){
         super(scene, x, y, texture, frame)
-        scene.physics.add.existing(this)
         scene.add.existing(this)
+        scene.physics.add.existing(this)
         this.body.setSize(35, 50)
         this.setCollideWorldBounds(true)
-        this.alive = true
+        this.setPushable(false)
+        this.can_move = true
         this.speed = 35
 
         this.hurtSound = scene.sound.add("bride_hurt")
@@ -19,7 +20,7 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
         })
         this.anims.create({
             key: "move",
-            frameRate: 4,
+            frameRate: 8,
             repeat: -1,
             frames: this.anims.generateFrameNumbers("bride", {
                 start: 0,
@@ -28,8 +29,6 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
         })
         this.anims.create({
             key: "surprised",
-            frameRate: 4,
-            repeat: -1,
             frames: this.anims.generateFrameNumbers("bride", {
                 start: 2,
                 end: 2
@@ -38,7 +37,7 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
     }
 
     update(){
-        if(this.alive){
+        if(this.can_move){
             if(this.x < player.x - 50){
                 this.play("move", true)
                 this.body.velocity.x = this.speed
@@ -55,12 +54,17 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
     }
 
     killed(){
-        this.alive = false
+        this.can_move = false
         this.body.velocity.x = 0
-        this.play("surprised")
+        this.surprised()
         this.hurtSound.play()
         this.scene.time.delayedCall(1500, () => {
-            this.alive = true
+            this.can_move = true
         });
+    }
+
+    surprised(){
+        //make ! appear
+        this.play("surprised")
     }
 }

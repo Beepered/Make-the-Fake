@@ -38,14 +38,15 @@ class Play extends Phaser.Scene{
         this.music.play();
 
         this.background = this.add.image(0, 50, "background").setOrigin(0)
+        worldWidth = this.background.width
         
-        this.cameras.main.setBounds(0, 0, this.background.width, 170)
-        this.physics.world.setBounds(0, 0, this.background.width, 170)
+        this.cameras.main.setBounds(0, 0, worldWidth, 170)
+        this.physics.world.setBounds(0, 0, worldWidth, 170)
         
-        bride = new Bride(this, this.background.width / 2 - 50, 135, "bride")
+        bride = new Bride(this, worldWidth / 2 - 50, 135, "bride", 3)
         
-        player = new Player(this, this.background.width / 2, 135, "player", 0)
-        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(2.5, 5)
+        player = new Player(this, worldWidth / 2, 135, "player", 2)
+        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(2.5, 4.5)
         
         //ground
         let ground = this.physics.add.sprite(0, 160, "ground").setOrigin(0)
@@ -59,10 +60,10 @@ class Play extends Phaser.Scene{
             repeat: 12
         });
 
-        this.minimum_spawn_time = 150
+        this.minimum_spawn_time = 200
         this.variation_spawn_time = 80
         this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
-        this.enemy_health = 3; this.enemy_speed = 60
+        this.enemy_health = 0.1; this.enemy_speed = 55
 
         this.EnemyGroup = this.add.group({
             runChildUpdate: true
@@ -98,7 +99,7 @@ class Play extends Phaser.Scene{
     }
 
     levelUp(){
-        this.minimum_spawn_time -= 7;
+        this.minimum_spawn_time -= 9;
         this.variation_spawn_time -= 5;
         this.enemy_speed += 8
         this.enemy_health += 0.3

@@ -46,6 +46,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         this.health--
         if(this.health <= 0){
             points += Math.floor(100 + (Math.random() * 500))
+            let text = this.scene.add.text(this.x, this.y - 40, points, { font: '10px Arial', fill: '#000000' }).setOrigin(0.5)
+            let basicTween = this.scene.tweens.add({
+                targets: text,
+                alpha: { from: 1, to: 0 },
+                scale: { from: 0.3, to: 1},
+                y: text.y - 20,
+                ease: 'Sine.easeInOut',
+            })
             this.destroy();
         }
     }
