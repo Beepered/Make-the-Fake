@@ -4,13 +4,16 @@ class Play extends Phaser.Scene{
     }
 
     preload(){
-        this.load.spritesheet("player", "assets/spritesheet.png", {
+        this.load.spritesheet("player", "assets/groom_spritesheet.png", {
             frameWidth: 55,
             frameHeight: 50
         })
         this.load.image("bullet", "assets/bullet.png")
 
-        this.load.image("bride", "assets/bride.png")
+        this.load.spritesheet("bride", "assets/bride_spritesheet.png", {
+            frameWidth: 55,
+            frameHeight: 50
+        })
 
         this.load.image("ground", "assets/ground.png")
         this.load.image("background", "assets/background.png")
