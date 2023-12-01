@@ -6,7 +6,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.body.setSize(20, 50)
         this.setCollideWorldBounds(true)
         
-        this.movement_speed = 120;
+        this.movement_speed = 130;
         this.jump_height = -450
         this.gravity = 18
         this.isJumping = false; this.alive = true;
@@ -79,7 +79,6 @@ class Player extends Phaser.Physics.Arcade.Sprite{
                     this.play("idle")
                 }
             }
-           
             if(Phaser.Input.Keyboard.JustDown(keyUP) && !this.isJumping){
                 this.jumpSound.play()
                 this.body.velocity.y = this.jump_height

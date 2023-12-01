@@ -14,12 +14,19 @@ class Play extends Phaser.Scene{
             frameWidth: 55,
             frameHeight: 50
         })
+        this.load.image("surprise", "assets/surprise.png")
 
         this.load.image("ground", "assets/ground.png")
         this.load.image("background", "assets/background.png")
 
-        this.load.image("police", "assets/police.png")
-        this.load.image("heli-police", "assets/heli-police.png")
+        this.load.spritesheet("police", "assets/police.png", {
+            frameWidth: 38,
+            frameHeight: 50
+        })
+        this.load.spritesheet("heli-police", "assets/heli-police.png", {
+            frameWidth: 38,
+            frameHeight: 50
+        })
 
         this.load.audio("music", "assets/music.mp3")
         this.load.audio("jump", "assets/jump.wav")
@@ -48,7 +55,7 @@ class Play extends Phaser.Scene{
         player = new Player(this, worldWidth / 2, 135, "player", 2)
         this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(2.5, 4.5)
         
-        //ground
+        //  ground
         let ground = this.physics.add.sprite(0, 160, "ground").setOrigin(0)
         ground.setImmovable(true)
         this.physics.add.collider(player, ground)
@@ -60,7 +67,15 @@ class Play extends Phaser.Scene{
             repeat: 12
         });
 
-        this.minimum_spawn_time = 200
+        //  COLLISION
+        this.physics.add.collider(bullet, bride, ()=>{
+            bullet.reset()
+            bride.killed()
+            player.killed()
+        });
+
+        //  enemy stuff
+        this.minimum_spawn_time = 10
         this.variation_spawn_time = 80
         this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
         this.enemy_health = 0.1; this.enemy_speed = 55
@@ -76,14 +91,15 @@ class Play extends Phaser.Scene{
 
         this.physics.add.overlap(bullet, this.EnemyGroup, (bullet, enemy) => {
             bullet.reset()
-            enemy.damage(bullet.body.velocity.x)
+            enemy.damage(bullet)
         })
-        
 
-        this.physics.add.collider(bullet, bride, ()=>{
+        this.PersonGroup = this.add.group({
+            runChildUpdate: true
+        })
+        this.physics.add.collider(bullet, this.PersonGroup, (bullet, person)=>{
             bullet.reset()
-            bride.killed()
-            player.killed()
+            person.killed()
         });
 
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);

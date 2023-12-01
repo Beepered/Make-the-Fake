@@ -11,6 +11,9 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
 
         this.hurtSound = scene.sound.add("bride_hurt")
 
+        this.surprise =  this.scene.add.sprite(this.x, this.y - 50, "surprise")
+        this.surprise.setVisible(false)
+
         this.anims.create({
             key: "idle",
             frames: this.anims.generateFrameNumbers("bride", {
@@ -37,6 +40,7 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
     }
 
     update(){
+        this.surprise.x = this.x
         if(this.can_move){
             if(this.x < player.x - 50){
                 this.play("move", true)
@@ -58,13 +62,14 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
         this.body.velocity.x = 0
         this.surprised()
         this.hurtSound.play()
-        this.scene.time.delayedCall(1500, () => {
-            this.can_move = true
-        });
     }
 
     surprised(){
-        //make ! appear
         this.play("surprised")
+        this.surprise.setVisible(true)
+        this.scene.time.delayedCall(1000, () => {
+            this.can_move = true
+            this.surprise.setVisible(false)
+        });
     }
 }

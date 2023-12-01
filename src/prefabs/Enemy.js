@@ -5,7 +5,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         let sprite_name
         if(rand_int == 0){
             sprite_name = "police"
-            y_pos = 120
+            y_pos = 135
         }
         else{
             sprite_name = "heli-police"
@@ -28,7 +28,30 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         this.health = health
         this.hitTime = 0 //knockback
 
-        this.hitSound = scene.sound.add("hit") 
+        this.hitSound = scene.sound.add("hit")
+        if(rand_int == 0){
+            this.anims.create({
+                key: "move",
+                frameRate: 4,
+                repeat: -1,
+                frames: this.anims.generateFrameNumbers("police", {
+                    start: 0,
+                    end: 1
+                })
+            })
+        }
+        else{
+            this.anims.create({
+                key: "move",
+                frameRate: 4,
+                repeat: -1,
+                frames: this.anims.generateFrameNumbers("heli-police", {
+                    start: 0,
+                    end: 1
+                })
+            })
+        }
+        this.play("move")
     }
 
     update(){
@@ -38,20 +61,20 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         this.hitTime--
     }
 
-    damage(bulletVelocity){
+    damage(bullet){
         this.hitSound.play()
         this.hitTime = 15
-        this.body.velocity.x = bulletVelocity / 5 //pushback dependent on bullet speed
+        this.body.velocity.x = bullet.body.velocity.x / 5 //pushback dependent on bullet speed
         
         this.health--
         if(this.health <= 0){
             points += Math.floor(100 + (Math.random() * 500))
-            let text = this.scene.add.text(this.x, this.y - 40, points, { font: '10px Arial', fill: '#000000' }).setOrigin(0.5)
+            let text = this.scene.add.text(this.x, this.y - 30, points, { font: '8px Arial', fill: '#000000' }).setOrigin(0.5).setScale(0.4)
             let basicTween = this.scene.tweens.add({
                 targets: text,
                 alpha: { from: 1, to: 0 },
-                scale: { from: 0.3, to: 1},
-                y: text.y - 20,
+                scale: { from: 0.4, to: 1},
+                y: text.y - 25,
                 ease: 'Sine.easeInOut',
             })
             this.destroy();
@@ -61,9 +84,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
     movement(){
         if(this.sprite_name == "police"){
             if(this.x < player.x - 5){
+                this.flipX = false
                 this.body.velocity.x = this.speed
             }
             else if(this.x > player.x + 5){
+                this.flipX = true
                 this.body.velocity.x = -this.speed
             }
             else{
@@ -72,9 +97,11 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         }
         else if (this.sprite_name == "heli-police"){
             if(this.x < player.x - 30){
+                this.flipX = false
                 this.body.velocity.x = this.speed / 1.5
             }
             else if(this.x > player.x + 30){
+                this.flipX = true
                 this.body.velocity.x = -this.speed / 1.5
             }
             else{
