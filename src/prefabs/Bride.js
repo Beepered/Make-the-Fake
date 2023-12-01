@@ -10,6 +10,8 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
         this.setCollideWorldBounds(true)
         this.alive = true
         this.speed = 35
+
+        this.hurtSound = scene.sound.add("bride_hurt")
     }
 
     update(){
@@ -30,7 +32,7 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
         this.alive = false
         this.body.velocity.x = 0
         //this.play("death")
-        //this.sound.play("death")
+        this.hurtSound.play()
         this.scene.time.delayedCall(1500, () => {
             this.alive = true
         });

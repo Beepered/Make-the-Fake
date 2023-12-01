@@ -17,7 +17,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.direction = 1
 
         this.jumpSound = scene.sound.add("jump") 
-        this.shootSound = scene.sound.add("shoot") 
+        this.shootSound = scene.sound.add("shoot")
+        this.hurtSound = scene.sound.add("groom_hurt")
         this.anims.create({
             key: "idle",
             frames: this.anims.generateFrameNumbers("player", {
@@ -91,6 +92,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
     }
 
     killed(){
+        this.hurtSound.play()
         lives--
         this.alive = false
         this.invincibleTime = 200

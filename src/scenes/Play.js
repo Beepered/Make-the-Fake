@@ -22,6 +22,8 @@ class Play extends Phaser.Scene{
         this.load.audio("jump", "assets/jump.wav")
         this.load.audio("shoot", "assets/shoot.wav")
         this.load.audio("hit", "assets/hit.wav")
+        this.load.audio("groom_hurt", "assets/groom_hurt.mp3")
+        this.load.audio("bride_hurt", "assets/bride_hurt.mp3")
     }
 
     create(){
@@ -57,7 +59,7 @@ class Play extends Phaser.Scene{
         this.minimum_spawn_time = 150
         this.variation_spawn_time = 80
         this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
-        this.enemy_health = 0.1; this.enemy_speed = 60
+        this.enemy_health = 3; this.enemy_speed = 60
 
         this.EnemyGroup = this.add.group({
             runChildUpdate: true
