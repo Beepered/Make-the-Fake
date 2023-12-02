@@ -19,7 +19,9 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
 	}
 
     update() {
-
+        if(this.active && (this.x < player.x - 120 || this.x > player.x + 120)){
+            this.reset()
+        }
 	}
 
     reset(){

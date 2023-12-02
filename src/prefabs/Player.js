@@ -108,15 +108,15 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.body.velocity.y = -170
         this.anims.stop();
         this.scene.time.delayedCall(1300, () => {
-            this.alive = true
             if(lives == 0){
-                if(points > highscore){
-                    highscore = points
+                if(score > highscore){
+                    highscore = score
                 }
                 this.scene.music.stop();
                 this.scene.scene.start("menuScene");
                 this.scene.scene.stop("UIScene")
             }
+            this.alive = true
         });
     }
     

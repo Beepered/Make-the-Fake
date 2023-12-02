@@ -2,7 +2,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, health, speed){
         let y_pos
         let sprite_name
-        if(Phaser.Math.Between(0, 2) == 0){
+        if(Phaser.Math.Between(0, 1) == 0){
             sprite_name = "police"
             y_pos = 135
         }
@@ -11,7 +11,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
             y_pos = 50
         }
 
-        if(Phaser.Math.Between(0, 2) == 0){ //left side
+        if(Phaser.Math.Between(0, 1) == 0){ //left side
             super(scene, -70, y_pos, sprite_name)
         }
         else{
@@ -66,8 +66,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         
         this.health--
         if(this.health <= 0){
-            points += Math.floor(100 + (Math.random() * 500))
-            let text = this.scene.add.text(this.x, this.y - 30, points, { font: '8px Arial', fill: '#000000' }).setOrigin(0.5).setScale(0.4)
+            let points = Math.floor(100 + (Math.random() * 500))
+            score += points
+            let text = this.scene.add.text(this.x, this.y - 30, points, { font: '8px Arial', fill: '#000000' }).setOrigin(0.5).setScale(0.7)
             let basicTween = this.scene.tweens.add({
                 targets: text,
                 alpha: { from: 1, to: 0 },
