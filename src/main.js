@@ -8,8 +8,13 @@ Physics (all game objects have physics)
 Camera (camera follows player)
 Text (UI text)
 Animation (all gameobjects have animation)
+Tween (when you kill something the points tween upwards and grow)
 Timers (difficulty increase)
 Sound (jump, shoot, hit, groom_hurt, bride_hurt)
+
+POLISH:
+I made the art style feel similar since the images I had only had the church
+The people that spawn use a math formula (even numbers + 1) to find where on the sprite sheet to take from (since sprites start at 0, 2, 4, 6)
 */
 
 let config = {
@@ -18,7 +23,7 @@ let config = {
     physics:{
         default: "arcade",
         arcade:{
-            debug:true
+            debug:false
         }
     },
     width: 750,

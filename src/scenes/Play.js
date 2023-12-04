@@ -48,7 +48,7 @@ class Play extends Phaser.Scene{
     create(){
         this.scene.launch("UIScene")
         this.music = this.sound.add("music", {
-            volume: 0.3,
+            volume: 0.25,
             loop: true
         });
         this.music.play();
@@ -138,7 +138,6 @@ class Play extends Phaser.Scene{
         this.variation_spawn_time -= 4;
         this.enemy_speed += 6
         this.enemy_health += 0.3
-        console.log("level up: " + this.minimum_spawn_time + " min, " + this.variation_spawn_time + " variation")
     }
 
     update(){

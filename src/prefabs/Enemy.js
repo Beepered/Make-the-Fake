@@ -20,6 +20,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         this.sprite_name = sprite_name
         scene.physics.add.existing(this)
         this.scene.add.existing(this)
+        this.body.setSize(20, 50)
         this.setCollideWorldBounds(true)
         this.setPushable(false)
         this.speed = speed

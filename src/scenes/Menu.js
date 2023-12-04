@@ -4,13 +4,13 @@ class Menu extends Phaser.Scene{
     }
 
     preload(){
-        this.load.audio("wind", "assets/wind.mp3")
+        this.load.audio("menu_music", "assets/menu_music.mp3")
     }
 
     create(){
         score = 0; lives = 3
-        this.music = this.sound.add("wind", {
-            volume: 0.35,
+        this.music = this.sound.add("menu_music", {
+            volume: 0.1,
             loop: true
         });
         this.music.play();
