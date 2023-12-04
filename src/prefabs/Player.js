@@ -3,7 +3,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, texture, frame);
         scene.add.existing(this)
         scene.physics.add.existing(this);
-        this.body.setSize(20, 50)
+        this.body.setSize(20, 48)
         this.setCollideWorldBounds(true)
         
         this.movement_speed = 130;

@@ -96,16 +96,24 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
             }
         }
         else if (this.sprite_name == "heli-police"){
-            if(this.x < player.x - 30){
+            if(this.x < player.x - 40){
                 this.flipX = false
                 this.body.velocity.x = this.speed / 1.5
             }
-            else if(this.x > player.x + 30){
+            else if(this.x > player.x + 40){
                 this.flipX = true
                 this.body.velocity.x = -this.speed / 1.5
             }
             else{
-                this.body.velocity.y = 15
+                if(this.y < player.y){
+                    this.body.velocity.y = this.speed / 1.5
+                }
+                else if (this.y > player.y){
+                    this.body.velocity.y = -this.speed / 1.5
+                }
+                else{
+                    this.body.velocity.y = 0
+                }
             }
         }
     }

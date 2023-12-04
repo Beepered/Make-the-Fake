@@ -7,7 +7,7 @@ class Bride extends Phaser.Physics.Arcade.Sprite{
         this.setCollideWorldBounds(true)
         this.setPushable(false)
         this.can_move = true
-        this.speed = 35
+        this.speed = 40
 
         this.hurtSound = scene.sound.add("bride_hurt")
 
