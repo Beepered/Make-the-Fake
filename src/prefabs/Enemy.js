@@ -2,6 +2,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, health, speed){
         let y_pos
         let sprite_name
+        /*
         if(Phaser.Math.Between(0, 1) == 0){
             sprite_name = "police"
             y_pos = 125
@@ -10,6 +11,9 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
             sprite_name = "heli-police"
             y_pos = 40
         }
+        */
+        sprite_name = "heli-police"
+        y_pos = 40
 
         if(Phaser.Math.Between(0, 1) == 0){ //left side
             super(scene, -100, y_pos, sprite_name)
@@ -96,15 +100,27 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
             }
         }
         else if (this.sprite_name == "heli-police"){
-            if(this.x < player.x - 40){
+            if(this.x < player.x - 60){
                 this.flipX = false
                 this.body.velocity.x = this.speed / 1.5
+                if(this.y > 40){ //go back up
+                    this.body.velocity.y = -this.speed / 1.5
+                }
+                else{
+                    this.body.velocity.y = 0
+                }
             }
-            else if(this.x > player.x + 40){
+            else if(this.x > player.x + 60){
                 this.flipX = true
                 this.body.velocity.x = -this.speed / 1.5
+                if(this.y > 40){
+                    this.body.velocity.y = -this.speed / 1.5
+                }
+                else{
+                    this.body.velocity.y = 0
+                }
             }
-            else{
+            else{ //go down to attack player
                 if(this.y < player.y){
                     this.body.velocity.y = this.speed / 1.5
                 }

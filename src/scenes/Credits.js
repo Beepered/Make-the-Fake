@@ -32,7 +32,8 @@ class Credits extends Phaser.Scene{
             "Play Scene music: Beyond Infinity by Blender Time\n\n" +
             "Programming in Phaser/JS\n\n" +
             "Art made in Krita\n\n" +
-            "Sound effects made in sfxr.me", textConfig).setOrigin(0.5)
+            "Sound effects made in sfxr.me" +
+            "Public Pixel font by GGBotNet", textConfig).setOrigin(0.5)
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     }
 

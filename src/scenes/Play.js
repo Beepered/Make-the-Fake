@@ -134,10 +134,10 @@ class Play extends Phaser.Scene{
     }
 
     levelUp(){
-        this.minimum_spawn_time -= 8;
-        this.variation_spawn_time -= 4;
-        this.enemy_speed += 6
-        this.enemy_health += 0.3
+        this.minimum_spawn_time -= 6;
+        this.variation_spawn_time -= 3;
+        this.enemy_speed += 5
+        this.enemy_health += 0.2
     }
 
     update(){

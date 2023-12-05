@@ -14,7 +14,7 @@ Sound (jump, shoot, hit, groom_hurt, bride_hurt)
 
 POLISH:
 I made the art style feel similar since the images I had only had the church
-The people that spawn use a math formula (even numbers + 1) to find where on the sprite sheet to take from (since sprites start at 0, 2, 4, 6)
+The people spawn use a math formula (even numbers + 1) to find where on the sprite sheet to take from (since sprites start at 0, 2, 4, 6)
 */
 
 let config = {
