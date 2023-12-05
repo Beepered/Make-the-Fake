@@ -54,23 +54,13 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             if(this.shootAnimTime <= 0){
                 if(keyLEFT.isDown){
                     this.direction = -1
-                    if(this.x > 55){
-                        this.body.velocity.x = -this.movement_speed
-                    }
-                    else{
-                        this.body.velocity.x = 0
-                    }
+                    this.body.velocity.x = -this.movement_speed
                     this.flipX = true;
                     this.play("move", true)
                 }
                 else if(keyRIGHT.isDown){
                     this.direction = 1
-                    if(this.x < 1145){
-                        this.body.velocity.x = this.movement_speed
-                    }
-                    else{
-                        this.body.velocity.x = 0
-                    }
+                    this.body.velocity.x = this.movement_speed
                     this.flipX = false;
                     this.play("move", true)
                 }

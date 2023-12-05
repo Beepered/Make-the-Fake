@@ -3,9 +3,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, texture)
         scene.physics.add.existing(this);
         scene.add.existing(this)
-        this.setCollideWorldBounds(true);
         this.speed = 350
-        this.checkWorldBounds = true;
         this.lifeTime = 0
     }
 

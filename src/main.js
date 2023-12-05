@@ -18,12 +18,12 @@ The people that spawn use a math formula (even numbers + 1) to find where on the
 */
 
 let config = {
-    type: Phaser.CANVAS,
+    type: Phaser.WEBGL,
     pixelArt: true,
     physics:{
         default: "arcade",
         arcade:{
-            debug:false
+            debug:true
         }
     },
     width: 750,

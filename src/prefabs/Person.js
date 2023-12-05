@@ -9,12 +9,12 @@ class Person extends Phaser.Physics.Arcade.Sprite{
         }
         let x_pos
         if(Phaser.Math.Between(0, 1) == 0){
-            x_pos = player.x - 250
+            x_pos = player.x - 280
         }
         else{
-            x_pos = player.x + 250
+            x_pos = player.x + 280
         }
-        super(scene, x_pos, 135, sprite_name)
+        super(scene, x_pos, 125, sprite_name)
         this.which_person = Math.floor(Math.random() * 3)
         if(this.which_person % 2 != 0){
             this.which_person += 1

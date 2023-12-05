@@ -4,18 +4,18 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         let sprite_name
         if(Phaser.Math.Between(0, 1) == 0){
             sprite_name = "police"
-            y_pos = 135
+            y_pos = 125
         }
         else{
             sprite_name = "heli-police"
-            y_pos = 50
+            y_pos = 40
         }
 
         if(Phaser.Math.Between(0, 1) == 0){ //left side
-            super(scene, -70, y_pos, sprite_name)
+            super(scene, -100, y_pos, sprite_name)
         }
         else{
-            super(scene, worldWidth + 70, y_pos, sprite_name)
+            super(scene, worldWidth + 100, y_pos, sprite_name)
         }
         this.sprite_name = sprite_name
         scene.physics.add.existing(this)

@@ -53,19 +53,19 @@ class Play extends Phaser.Scene{
         });
         this.music.play();
 
-        this.background = this.add.image(0, 50, "background").setOrigin(0)
+        this.background = this.add.image(0, 40, "background").setOrigin(0)
         worldWidth = this.background.width
         
         this.cameras.main.setBounds(0, 0, worldWidth, 170)
         this.physics.world.setBounds(0, 0, worldWidth, 170)
         
-        bride = new Bride(this, worldWidth / 2 - 50, 135, "bride", 3)
+        bride = new Bride(this, worldWidth / 2 - 50, 125, "bride", 3)
         
-        player = new Player(this, worldWidth / 2, 135, "player", 2)
-        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(2.5, 4.5)
+        player = new Player(this, worldWidth / 2, 125, "player", 2)
+        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(3.5, 3.5)
         
         //  ground
-        let ground = this.physics.add.sprite(0, 160, "ground").setOrigin(0)
+        let ground = this.physics.add.sprite(0, 150, "ground").setOrigin(0)
         ground.setImmovable(true)
         this.physics.add.collider(player, ground)
 
