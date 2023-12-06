@@ -14,7 +14,7 @@ class UIScene extends Phaser.Scene
         this.score_text = this.add.bitmapText(160, 75, "Pixel", score.toString().padStart(10, '0'), 16).setOrigin(0.5)
 
         this.HIGHSCORE_text = this.add.bitmapText(400, 50, "Pixel", "HIGH SCORE", 16).setOrigin(0.5)
-        this.highscore_text = this.add.bitmapText(400, 75, "Pixel", highscore.toString().padStart(10, '0'), 16).setOrigin(0.5)
+        this.highscore_text = this.add.bitmapText(400, 75, "Pixel", parseInt(localStorage.getItem('highscore')).toString().padStart(10, '0'), 16).setOrigin(0.5)
 
         this.add.sprite(580, 60, "lives_image").setOrigin(0.5).setScale(4)
         this.lives_text = this.add.bitmapText(640, 55, "Pixel", 'X 0', 25).setOrigin(0.5)

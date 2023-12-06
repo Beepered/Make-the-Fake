@@ -99,8 +99,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.anims.stop();
         this.scene.time.delayedCall(1300, () => {
             if(lives == 0){
-                if(score > highscore){
-                    highscore = score
+                if(score > parseInt(localStorage.getItem('highscore'))){
+                    localStorage.setItem('highscore', score)
                 }
                 this.scene.music.stop();
                 this.scene.scene.start("menuScene");

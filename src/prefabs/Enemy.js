@@ -121,6 +121,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
                 }
             }
             else{ //go down to attack player
+                if(this.x < player.x - 10){
+                    this.flipX = false
+                    this.body.velocity.x = this.speed / 1.5
+                }
+                else if(this.x > player.x + 10){
+                    this.flipX = true
+                    this.body.velocity.x = -this.speed / 1.5
+                }
                 if(this.y < player.y){
                     this.body.velocity.y = this.speed / 1.5
                 }
