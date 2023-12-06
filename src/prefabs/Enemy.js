@@ -100,7 +100,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
             }
         }
         else if (this.sprite_name == "heli-police"){
-            if(this.x < player.x - 60){
+            if(this.x < player.x - 70){
                 this.flipX = false
                 this.body.velocity.x = this.speed / 1.5
                 if(this.y > 40){ //go back up
@@ -110,7 +110,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
                     this.body.velocity.y = 0
                 }
             }
-            else if(this.x > player.x + 60){
+            else if(this.x > player.x + 70){
                 this.flipX = true
                 this.body.velocity.x = -this.speed / 1.5
                 if(this.y > 40){

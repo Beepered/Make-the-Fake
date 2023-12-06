@@ -15,20 +15,12 @@ class Menu extends Phaser.Scene{
             loop: true
         });
         this.music.play();
-        let textConfig = {
-            fontFamily: "Montserrat",
-            fontSize: "22px",
-            color: "#FFFFFF",
-            align: "center",
-            padding: {
-                top: 5,
-                bottom: 5
-            },
-        }
         this.add.bitmapText(gameWidth / 2, gameHeight / 2.5, "Pixel", "Groom Raider", 50).setOrigin(0.5).setTintFill(0xFF0000)
-        this.add.bitmapText(gameWidth / 2, gameHeight / 2, "Pixel", "press SPACEBAR to PLAY", 20).setOrigin(0.5)
-        this.add.bitmapText(gameWidth / 2, gameHeight / 1.8, "Pixel", "press UP for CREDITS", 20).setOrigin(0.5)
+        this.add.bitmapText(gameWidth / 2, gameHeight / 1.8, "Pixel", "press SPACEBAR to PLAY", 20).setOrigin(0.5)
+        this.add.bitmapText(gameWidth / 2, gameHeight / 1.6, "Pixel", "press UP for INSTRUCTIONS", 20).setOrigin(0.5)
+        this.add.bitmapText(gameWidth / 2, gameHeight / 1.45, "Pixel", "press DOWN for CREDITS", 20).setOrigin(0.5)
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         SPACEBAR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
@@ -38,6 +30,9 @@ class Menu extends Phaser.Scene{
             this.scene.start("playScene")
         }
         else if(Phaser.Input.Keyboard.JustDown(keyUP)){
+            this.scene.start("instructionScene")
+        }
+        else if(Phaser.Input.Keyboard.JustDown(keyDOWN)){
             this.scene.start("creditScene")
         }
     }

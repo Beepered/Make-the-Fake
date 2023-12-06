@@ -48,7 +48,7 @@ class Play extends Phaser.Scene{
     create(){
         this.scene.launch("UIScene")
         this.music = this.sound.add("music", {
-            volume: 0.1,
+            volume: 0.05,
             loop: true
         });
         this.music.play();
