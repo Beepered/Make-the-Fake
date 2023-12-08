@@ -6,6 +6,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.body.setSize(20, 48)
         this.setCollideWorldBounds(true)
         
+        //stats
         this.movement_speed = 130;
         this.jump_height = -450
         this.gravity = 18
@@ -15,6 +16,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.invincibleTime = 0
         this.direction = 1
 
+        //adding sounds and animation
         this.jumpSound = scene.sound.add("jump") 
         this.shootSound = scene.sound.add("shoot")
         this.hurtSound = scene.sound.add("groom_hurt")
@@ -43,6 +45,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         })
     }
     update(){
+        //movement
         if(this.alive){
             if(this.body.touching.down){
                 this.isJumping = false
@@ -73,15 +76,12 @@ class Player extends Phaser.Physics.Arcade.Sprite{
                 this.jumpSound.play()
                 this.body.velocity.y = this.jump_height
             }
-            if(Phaser.Input.Keyboard.JustDown(SPACEBAR) && this.shootTime < 0){
+            if(Phaser.Input.Keyboard.JustDown(SPACEBAR) && this.shootTime < 0){ //shooting
                 this.play("shoot")
                 this.shootSound.play()
-                this.shootAnimTime = 15
+                this.shootAnimTime = 15 //let the shoot animation play for a little
                 bullet.shoot(this.x + (15 * this.direction), this.y - 10, this.direction);
                 this.shootTime = this.maxShootTime
-            }
-            if(this.invincibleTime <= 0){
-                this.clearTint()
             }
         }
         this.body.velocity.y += this.gravity
@@ -95,11 +95,11 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.alive = false
         this.invincibleTime = 180
         this.body.velocity.x = 0
-        this.body.velocity.y = -170
+        this.body.velocity.y = -170 //jump up a little
         this.anims.stop();
-        this.scene.time.delayedCall(1300, () => {
-            if(lives == 0){
-                if(score > parseInt(localStorage.getItem('highscore'))){
+        this.scene.time.delayedCall(1300, () => { //have some time before giving control back to player
+            if(lives == 0){ //no more lives
+                if(score > parseInt(localStorage.getItem('highscore'))){ //save highscore to local storage
                     localStorage.setItem('highscore', score)
                 }
                 this.scene.music.stop();

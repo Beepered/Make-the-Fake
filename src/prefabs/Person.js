@@ -15,7 +15,7 @@ class Person extends Phaser.Physics.Arcade.Sprite{
             x_pos = player.x + 280
         }
         super(scene, x_pos, 125, sprite_name)
-        this.which_person = Math.floor(Math.random() * 3)
+        this.which_person = Math.floor(Math.random() * 3) //choose where on sprite sheet to take
         if(this.which_person % 2 != 0){
             this.which_person += 1
         }
@@ -63,7 +63,7 @@ class Person extends Phaser.Physics.Arcade.Sprite{
 
     killed(){
         this.hitSound.play()
-        let points = Math.floor(400 + (Math.random() * 500))
+        let points = Math.floor(400 + (Math.random() * 500)) //more points than enemy
         score += points
         let text = this.scene.add.text(this.x, this.y - 30, points, { font: '8px Arial', fill: '#000000' }).setOrigin(0.5).setScale(0.7)
         let basicTween = this.scene.tweens.add({

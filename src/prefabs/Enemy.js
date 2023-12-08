@@ -2,8 +2,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, health, speed){
         let y_pos
         let sprite_name
-        /*
-        if(Phaser.Math.Between(0, 1) == 0){
+        if(Phaser.Math.Between(0, 1) == 0){ //what type of police to spawn
             sprite_name = "police"
             y_pos = 125
         }
@@ -11,9 +10,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
             sprite_name = "heli-police"
             y_pos = 40
         }
-        */
-        sprite_name = "heli-police"
-        y_pos = 40
 
         if(Phaser.Math.Between(0, 1) == 0){ //left side
             super(scene, -100, y_pos, sprite_name)
@@ -27,10 +23,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
         this.body.setSize(20, 50)
         this.setCollideWorldBounds(true)
         this.setPushable(false)
+
+        //stats given by Play Scene
         this.speed = speed
         this.health = health
         this.hitTime = 0 //knockback
 
+        //add animations based on "sprite_name" and sound
         this.hitSound = scene.sound.add("hit")
         if(sprite_name == "police"){
             this.anims.create({
@@ -58,7 +57,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
     }
 
     update(){
-        if(this.hitTime <= 0){
+        if(this.hitTime <= 0){ //pushback enemy
             this.movement()
         }
         this.hitTime--
@@ -99,7 +98,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite{
                 this.body.velocity.x = 0
             }
         }
-        else if (this.sprite_name == "heli-police"){
+        else if (this.sprite_name == "heli-police"){ //follow player then swoop down to attack
             if(this.x < player.x - 70){
                 this.flipX = false
                 this.body.velocity.x = this.speed / 1.5

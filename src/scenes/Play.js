@@ -46,7 +46,7 @@ class Play extends Phaser.Scene{
     }
 
     create(){
-        this.scene.launch("UIScene")
+        this.scene.launch("UIScene") //display lives and points at top of screen
         this.music = this.sound.add("music", {
             volume: 0.05,
             loop: true
@@ -56,19 +56,21 @@ class Play extends Phaser.Scene{
         this.background = this.add.image(0, 40, "background").setOrigin(0)
         worldWidth = this.background.width
         
+        //setting camera and collision based on size of background
         this.cameras.main.setBounds(0, 0, worldWidth, 170)
         this.physics.world.setBounds(0, 0, worldWidth, 170)
         
         bride = new Bride(this, worldWidth / 2 - 50, 125, "bride", 3)
         
         player = new Player(this, worldWidth / 2, 125, "player", 2)
-        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(3.5, 3.5)
+        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(3.5, 3.5) //let camera follow player
         
         //  ground
         let ground = this.physics.add.sprite(0, 150, "ground").setOrigin(0)
         ground.setImmovable(true)
         this.physics.add.collider(player, ground)
 
+        //increase difficulty every 15 seconds
         this.difficultyTimer = this.time.addEvent({
             delay: 15000,
             callback: this.levelUp,
@@ -83,7 +85,7 @@ class Play extends Phaser.Scene{
             player.killed()
         });
 
-        //  enemy stuff
+        //  enemy spawn and data
         this.minimum_spawn_time = 230
         this.variation_spawn_time = 100
         this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
@@ -103,6 +105,7 @@ class Play extends Phaser.Scene{
             enemy.damage(bullet)
         })
 
+        //people spawn
         this.minimum_person_spawn_time = 450
         this.variation_person_spawn_time = 200
         this.person_spawn_time = this.minimum_person_spawn_time + (Math.random() * this.variation_person_spawn_time)
@@ -115,6 +118,7 @@ class Play extends Phaser.Scene{
             person.killed()
         });
 
+        //controls
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
