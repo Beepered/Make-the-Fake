@@ -1,7 +1,7 @@
 /*
 Name: Brendan Trieu
 Game Title: Groom Raider
-Total Hours: 14
+Total Hours: 18
 
 major components:
 Physics (all game objects have physics)
