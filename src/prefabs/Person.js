@@ -14,7 +14,7 @@ class Person extends Phaser.Physics.Arcade.Sprite{
         else{
             x_pos = player.x + 280
         }
-        super(scene, x_pos, 125, sprite_name)
+        super(scene, x_pos, 126, sprite_name)
         this.which_person = Math.floor(Math.random() * 3) //choose where on sprite sheet to take
         if(this.which_person % 2 != 0){
             this.which_person += 1
@@ -73,6 +73,10 @@ class Person extends Phaser.Physics.Arcade.Sprite{
             y: text.y - 10,
             ease: 'Sine.easeInOut',
         })
+        if(score >= lives_score){ //give more lives
+            lives++
+            lives_score += 20000
+        }
         this.destroy()
     }
 }

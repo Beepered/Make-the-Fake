@@ -7,14 +7,13 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.setCollideWorldBounds(true)
         
         //stats
-        this.movement_speed = 130;
-        this.jump_height = -450
+        this.movement_speed = 160;
+        this.jump_height = -650
         this.gravity = 18
         this.isJumping = false; this.alive = true;
         bullet = new Bullet(scene, -10, -10, "bullet")
-        this.shootTime = 0; this.maxShootTime = 50; this.shootAnimTime = 0
-        this.invincibleTime = 0
-        this.direction = 1
+        this.canShoot = true; this.invincible = false
+        this.direction = 1 //direction player is facing so the bullet knows where to go
 
         //adding sounds and animation
         this.jumpSound = scene.sound.add("jump") 
@@ -44,70 +43,88 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             })
         })
     }
-    update(){
-        //movement
+    update(time, delta){
         if(this.alive){
-            if(this.body.touching.down){
-                this.isJumping = false
-            }
-            else{
-                this.isJumping = true
-            }
-
-            if(this.shootAnimTime <= 0){
-                if(keyLEFT.isDown){
-                    this.direction = -1
-                    this.body.velocity.x = -this.movement_speed
-                    this.flipX = true;
-                    this.play("move", true)
-                }
-                else if(keyRIGHT.isDown){
-                    this.direction = 1
-                    this.body.velocity.x = this.movement_speed
-                    this.flipX = false;
-                    this.play("move", true)
-                }
-                else{
-                    this.body.velocity.x = 0
-                    this.play("idle")
-                }
-            }
-            if(Phaser.Input.Keyboard.JustDown(keyUP) && !this.isJumping){
-                this.jumpSound.play()
-                this.body.velocity.y = this.jump_height
-            }
-            if(Phaser.Input.Keyboard.JustDown(SPACEBAR) && this.shootTime < 0){ //shooting
-                this.play("shoot")
-                this.shootSound.play()
-                this.shootAnimTime = 15 //let the shoot animation play for a little
-                bullet.shoot(this.x + (15 * this.direction), this.y - 10, this.direction);
-                this.shootTime = this.maxShootTime
-            }
+            this.movement()
+            this.shoot()
         }
         this.body.velocity.y += this.gravity
-        this.invincibleTime--
-        this.shootTime--; this.shootAnimTime--
+    }
+
+    movement(){
+        if(this.body.touching.down){ //preventing "double" jumping
+            this.isJumping = false
+        }
+        else{
+            this.isJumping = true
+        }
+
+        //movement
+        if (keyLEFT.isDown) {
+            this.direction = -1
+            this.body.velocity.x = -this.movement_speed
+            this.flipX = true;
+            if (this.canShoot) { //play move animation only when not shooting
+                this.play("move", true)
+            }
+        }
+        else if (keyRIGHT.isDown) {
+            this.direction = 1
+            this.body.velocity.x = this.movement_speed
+            this.flipX = false;
+            if (this.canShoot) {
+                this.play("move", true)
+            }
+        }
+        else {
+            this.body.velocity.x = 0
+            if (this.canShoot) {
+                this.play("idle")
+            }
+        }
+
+        if(Phaser.Input.Keyboard.JustDown(keyUP) && !this.isJumping){ //jump
+            this.jumpSound.play()
+            this.body.velocity.y = this.jump_height
+        }
+    }
+
+    shoot(){
+        if(Phaser.Input.Keyboard.JustDown(SPACEBAR) && this.canShoot){ //shooting
+            this.play("shoot")
+            this.shootSound.play()
+            this.canShoot = false
+            bullet.shoot(this.x + (15 * this.direction), this.y - 10, this.direction);
+            this.scene.time.delayedCall(500, () => {
+                this.canShoot = true
+            })
+        }
     }
 
     killed(){
-        this.hurtSound.play()
-        lives--
-        this.alive = false
-        this.invincibleTime = 180
-        this.body.velocity.x = 0
-        this.body.velocity.y = -170 //jump up a little
-        this.anims.stop();
-        this.scene.time.delayedCall(1300, () => { //have some time before giving control back to player
-            if(lives == 0){ //no more lives
-                if(score > parseInt(localStorage.getItem('highscore'))){ //save highscore to local storage
-                    localStorage.setItem('highscore', score)
+        if(!this.invincible){
+            this.hurtSound.play()
+            lives--
+            this.alive = false
+            this.invincible = true
+            this.body.velocity.x = 0
+            this.body.velocity.y = -170 //jump up a little
+            this.anims.stop();
+            this.scene.time.delayedCall(1800, () => {
+                this.invincible = false
+            })
+            this.scene.time.delayedCall(1300, () => { //have some time before giving control back to player
+                if (lives == 0) { //no more lives
+                    if (score > parseInt(localStorage.getItem('highscore'))) { //save highscore to local storage
+                        localStorage.setItem('highscore', score)
+                    }
+                    this.scene.music.stop();
+                    this.scene.scene.start("menuScene");
+                    this.scene.scene.stop("UIScene")
                 }
-                this.scene.music.stop();
-                this.scene.scene.start("menuScene");
-                this.scene.scene.stop("UIScene")
-            }
-            this.alive = true
-        });
+                this.alive = true
+            });
+        }
     }
     
 }

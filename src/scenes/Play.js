@@ -46,9 +46,10 @@ class Play extends Phaser.Scene{
     }
 
     create(){
+        console.log(Phaser.VERSION)
         this.scene.launch("UIScene") //display lives and points at top of screen
         this.music = this.sound.add("music", {
-            volume: 0.05,
+            volume: 0.1,
             loop: true
         });
         this.music.play();
@@ -63,7 +64,7 @@ class Play extends Phaser.Scene{
         bride = new Bride(this, worldWidth / 2 - 50, 125, "bride", 3)
         
         player = new Player(this, worldWidth / 2, 125, "player", 2)
-        this.cameras.main.startFollow(player, false, 0.2, 0.2).setZoom(3.5, 3.5) //let camera follow player
+        this.cameras.main.startFollow(player, false).setZoom(3.5, 3.5) //let camera follow player
         
         //  ground
         let ground = this.physics.add.sprite(0, 150, "ground").setOrigin(0)
@@ -86,18 +87,16 @@ class Play extends Phaser.Scene{
         });
 
         //  enemy spawn and data
-        this.minimum_spawn_time = 230
-        this.variation_spawn_time = 100
+        this.minimum_spawn_time = 3
+        this.variation_spawn_time = 1.5
         this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
-        this.enemy_health = 0.1; this.enemy_speed = 50
+        this.enemy_health = 0.1; this.enemy_speed = 45
 
         this.EnemyGroup = this.add.group({
             runChildUpdate: true
         })
         this.physics.add.overlap(player, this.EnemyGroup, ()=>{
-            if(player.invincibleTime <= 0){
-                player.killed()
-            }
+            player.killed()
         })
 
         this.physics.add.overlap(bullet, this.EnemyGroup, (bullet, enemy) => {
@@ -106,8 +105,8 @@ class Play extends Phaser.Scene{
         })
 
         //people spawn
-        this.minimum_person_spawn_time = 450
-        this.variation_person_spawn_time = 200
+        this.minimum_person_spawn_time = 7
+        this.variation_person_spawn_time = 2.5
         this.person_spawn_time = this.minimum_person_spawn_time + (Math.random() * this.variation_person_spawn_time)
 
         this.PersonGroup = this.add.group({
@@ -138,22 +137,22 @@ class Play extends Phaser.Scene{
     }
 
     levelUp(){
-        this.minimum_spawn_time -= 6;
-        this.variation_spawn_time -= 3;
+        this.minimum_spawn_time -= 0.15;
+        this.variation_spawn_time -= 0.1;
         this.enemy_speed += 5
         this.enemy_health += 0.2
     }
 
-    update(){
+    update(time, delta){
         player.update();
         bride.update();
         bullet.update();
         
-        this.spawn_time--
+        this.spawn_time -= delta * 0.001
         if(this.spawn_time <= 0){
             this.addEnemy()
         }
-        this.person_spawn_time--
+        this.person_spawn_time -= delta * 0.001
         if(this.person_spawn_time <= 0){
             this.addPerson()
         }
