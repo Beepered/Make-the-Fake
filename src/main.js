@@ -20,4 +20,4 @@ let worldWidth
 
 let keyUP, keyDOWN, keyLEFT, keyRIGHT, SPACEBAR;
 let player, bullet, bride
-let score = 0; highscore = 0; lives = 3; lives_score = 20000;
+let score = 0; highscore = 0; lives = 3; lives_score = 15000;

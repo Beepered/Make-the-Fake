@@ -87,10 +87,10 @@ class Play extends Phaser.Scene{
         });
 
         //  enemy spawn and data
-        this.minimum_spawn_time = 3
+        this.minimum_spawn_time = 1.4
         this.variation_spawn_time = 1.5
         this.spawn_time = this.minimum_spawn_time + (Math.random() * this.variation_spawn_time)
-        this.enemy_health = 0.1; this.enemy_speed = 45
+        this.enemy_health = 0.1; this.enemy_speed = 60
 
         this.EnemyGroup = this.add.group({
             runChildUpdate: true
@@ -105,8 +105,8 @@ class Play extends Phaser.Scene{
         })
 
         //people spawn
-        this.minimum_person_spawn_time = 7
-        this.variation_person_spawn_time = 2.5
+        this.minimum_person_spawn_time = 6
+        this.variation_person_spawn_time = 3
         this.person_spawn_time = this.minimum_person_spawn_time + (Math.random() * this.variation_person_spawn_time)
 
         this.PersonGroup = this.add.group({
@@ -137,9 +137,9 @@ class Play extends Phaser.Scene{
     }
 
     levelUp(){
-        this.minimum_spawn_time -= 0.15;
-        this.variation_spawn_time -= 0.1;
-        this.enemy_speed += 5
+        this.minimum_spawn_time -= 0.08;
+        this.variation_spawn_time -= 0.09;
+        this.enemy_speed += 7
         this.enemy_health += 0.2
     }
 

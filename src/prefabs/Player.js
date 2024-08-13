@@ -43,7 +43,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             })
         })
     }
-    update(time, delta){
+    update(){
         if(this.alive){
             this.movement()
             this.shoot()
